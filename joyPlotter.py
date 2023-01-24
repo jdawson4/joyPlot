@@ -16,7 +16,7 @@ for file in os.listdir('wavs'):
 
     # we actually have two channels, we only need 1:
     data = data[:,0]
-    data = np.absolute(data)
+    data = np.absolute(data) # and we don't need negatives
 
     # get some details:
     print("Shape:", data.shape)
@@ -24,15 +24,13 @@ for file in os.listdir('wavs'):
     print("Length:", length)
 
     # now let's take every m sections
-    m = int(length)//10 # and...every 10th second?
+    m = int(length)//5 # and...every xth second?
     mths = []
     stepsize = len(data)//m
     for i in range(0, len(data)-1, stepsize):
         mths.append(data[i:i+stepsize])
-        #print(np.amin(data[i:i+stepsize]))
-        #print(np.amax(data[i:i+stepsize]))
     mths = np.array(mths)
-    print(mths.shape)
+    #print(mths.shape)
 
     # ok and what if we just look at the first second of that set?
     mFirstSeconds = []
@@ -41,7 +39,7 @@ for file in os.listdir('wavs'):
     for i in mths:
         mFirstSeconds.append(i[0:stepsize])
     mFirstSeconds = np.array(mFirstSeconds)
-    print(mFirstSeconds.shape)
+    #print(mFirstSeconds.shape)
 
     # and let's do some plotting:
     for i in range(m):
