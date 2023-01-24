@@ -27,7 +27,7 @@ for file in os.listdir('wavs'):
     print("Length:", length)
 
     # now let's take every m sections
-    x = 5
+    x = 2
     m = int(length)//x # and...every xth second?
     mths = []
     stepsize = len(data)//m
@@ -53,7 +53,14 @@ for file in os.listdir('wavs'):
     fig, axes = joypy.joyplot(
         data=df,
         xlabels=False,
-        ylabels=False
+        ylabels=False,
+        grid=False, fill=False, background='w', linecolor="k", linewidth=1,
+        legend=False, overlap=0.5,
+        #figsize=(6,5)
     )
+
+    plt.subplots_adjust(left=.333, right=.667, top=1, bottom=0) # rule of thirds!
+    #for a in axes[:-1]:
+    #    a.set_xlim([-1*mFirstSeconds.shape[1],2*mFirstSeconds.shape[1]])
     plt.savefig('plots/'+file[:-4]+'.png', dpi=500)
     #plt.show()
