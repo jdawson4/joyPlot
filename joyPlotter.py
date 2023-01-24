@@ -11,7 +11,7 @@ import joypy
 import pandas as pd
 
 for file in os.listdir('wavs'):
-    print("\n\nNow reading", file)
+    print("\nNow reading", file)
 
     # read raw file and get some facts
     rate, data = wavfile.read('wavs/'+file)
@@ -31,7 +31,7 @@ for file in os.listdir('wavs'):
     m = int(length)//x # and...every xth second?
     mths = []
     stepsize = len(data)//m
-    for i in range(0, len(data)-1, stepsize):
+    for i in range(0, len(data)-stepsize, stepsize):
         mths.append(data[i:i+stepsize])
     mths = np.array(mths)
     #print(mths.shape)

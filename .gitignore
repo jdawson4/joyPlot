@@ -1,5 +1,4 @@
 *.wav
 !/wavs/example.wav
 *.png
-!/plots/example.png
-
+!examplePlot.png
