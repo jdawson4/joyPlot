@@ -5,7 +5,10 @@
 from scipy.io import wavfile
 import os
 import matplotlib.pyplot as plt
+#from IPython.display import display
 import numpy as np
+import joypy
+import pandas as pd
 
 for file in os.listdir('wavs'):
     print("\n\nNow reading", file)
@@ -24,7 +27,8 @@ for file in os.listdir('wavs'):
     print("Length:", length)
 
     # now let's take every m sections
-    m = int(length)//5 # and...every xth second?
+    x = 5
+    m = int(length)//x # and...every xth second?
     mths = []
     stepsize = len(data)//m
     for i in range(0, len(data)-1, stepsize):
@@ -41,10 +45,15 @@ for file in os.listdir('wavs'):
     mFirstSeconds = np.array(mFirstSeconds)
     #print(mFirstSeconds.shape)
 
-    # and let's do some plotting:
-    for i in range(m):
-        time = np.linspace(0., (length/m)/n, mFirstSeconds[0].shape[0])
-        plt.plot(time, mFirstSeconds[i], label="Left channel")
-        plt.xlabel("Time [s]")
-        plt.ylabel("Amplitude")
-        plt.show()
+    # ok, now let's make our joyplot!
+    df = pd.DataFrame(
+        np.transpose(mFirstSeconds),
+    )
+    #display(df)
+    fig, axes = joypy.joyplot(
+        data=df,
+        xlabels=False,
+        ylabels=False
+    )
+    plt.savefig('plots/'+file[:-4]+'.png', dpi=500)
+    #plt.show()
