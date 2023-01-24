@@ -18,4 +18,3 @@ for file in os.listdir('wavs'):
     plt.xlabel("Time [s]")
     plt.ylabel("Amplitude")
     plt.show()
-
