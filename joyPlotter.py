@@ -3,18 +3,19 @@
 # This is the script that actually does the joy plotting!
 
 from scipy.io import wavfile
-import os
+import sys
+import os.path
 import matplotlib.pyplot as plt
 #from IPython.display import display
 import numpy as np
 import joypy
 import pandas as pd
 
-for file in os.listdir('wavs'):
-    print("\nNow reading", file)
+def main(filename):
+    print("\nNow reading", filename)
 
     # read raw file and get some facts
-    rate, data = wavfile.read('wavs/'+file)
+    rate, data = wavfile.read('wavs/'+filename)
     length = data.shape[0] / rate # length in seconds
 
     # we actually have two channels, we only need 1:
@@ -62,5 +63,12 @@ for file in os.listdir('wavs'):
     plt.subplots_adjust(left=.333, right=.667, top=1, bottom=0) # rule of thirds!
     #for a in axes[:-1]:
     #    a.set_xlim([-1*mFirstSeconds.shape[1],2*mFirstSeconds.shape[1]])
-    plt.savefig('plots/'+file[:-4]+'.png', dpi=500)
+    plt.savefig('plots/'+filename[:-4]+'.png', dpi=500)
     #plt.show()
+
+if __name__ == '__main__':
+    if len(sys.argv) > 1:
+        if os.path.isfile('wavs/' + sys.argv[1]):
+            main(sys.argv[1])
+        elif os.path.isfile('wavs/' + sys.argv[1] + '.wav'):
+            main(sys.argv[1] + '.wav')
