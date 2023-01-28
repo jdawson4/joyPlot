@@ -28,15 +28,17 @@ def main(filename):
     print("Length:", length)
 
     # now let's take every m sections
-    x = 2
+    x = 3
+    secondsToInclude=2
     m = int(length)//x # and...every xth second?
     mths = []
-    stepsize = len(data)//m
+    stepsize = int(len(data)//m)
     for i in range(0, len(data)-stepsize, stepsize):
-        mths.append(data[i:i+stepsize])
+        mths.append(data[i:i+int(secondsToInclude*rate)])
     mths = np.array(mths)
-    #print(mths.shape)
+    print(mths.shape[0], "graphs, each",mths.shape[1],"long")
 
+    '''
     # ok and what if we just look at the first second of that set?
     mFirstSeconds = []
     n = mths.shape[1] // rate # this is how long each second is in the mths
@@ -45,10 +47,11 @@ def main(filename):
         mFirstSeconds.append(i[0:stepsize])
     mFirstSeconds = np.array(mFirstSeconds)
     #print(mFirstSeconds.shape)
+    '''
 
     # ok, now let's make our joyplot!
     df = pd.DataFrame(
-        np.transpose(mFirstSeconds),
+        np.transpose(mths),
     )
     #display(df)
     fig, axes = joypy.joyplot(
