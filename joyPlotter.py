@@ -18,8 +18,9 @@ def main(filename):
     rate, data = wavfile.read('wavs/'+filename)
     length = data.shape[0] / rate # length in seconds
 
-    # we actually have two channels, we only need 1:
-    data = data[:,0]
+    # normally, we have two channels, when we only need 1:
+    if data.shape[1]==2:
+        data = data[:,0]
     data = np.absolute(data) # and we don't need negatives
 
     # get some details:
