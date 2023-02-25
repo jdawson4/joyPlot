@@ -11,24 +11,25 @@ import numpy as np
 import joypy
 import pandas as pd
 
+
 def main(filename):
     print("\nNow reading", filename)
 
     # read raw file and get some facts
-    rate, data = wavfile.read('wavs/'+filename)
-    length = data.shape[0] / rate # length in seconds
+    rate, data = wavfile.read("wavs/" + filename)
+    length = data.shape[0] / rate  # length in seconds
 
     # normally, we have two channels, when we only need 1:
-    if data.shape[1]==2:
-        data = data[:,0]
-    data = np.absolute(data) # and we don't need negatives
+    if data.shape[1] == 2:
+        data = data[:, 0]
+    data = np.absolute(data)  # and we don't need negatives
 
     # get some details:
     print("Shape:", data.shape)
     print("Rate:", rate)
     print("Length:", length)
 
-    '''
+    """
     # now let's take every m sections
     x = 3
     secondsToInclude=2
@@ -39,18 +40,18 @@ def main(filename):
         mths.append(data[i:i+int(secondsToInclude*rate)])
     mths = np.array(mths)
     print(mths.shape[0], "graphs, each",mths.shape[1],"long")
-    '''
+    """
 
     # now let's take every m sections
-    secondsToInclude=4
+    secondsToInclude = 4
     mths = []
-    stepsize = int(secondsToInclude*rate)
-    for i in range(0, len(data)-stepsize, stepsize):
-        mths.append(data[i:i+stepsize])
+    stepsize = int(secondsToInclude * rate)
+    for i in range(0, len(data) - stepsize, stepsize):
+        mths.append(data[i : i + stepsize])
     mths = np.array(mths)
-    print(mths.shape[0], "graphs, each",mths.shape[1],"long")
+    print(mths.shape[0], "graphs, each", mths.shape[1], "long")
 
-    '''
+    """
     # ok and what if we just look at the first second of that set?
     mFirstSeconds = []
     n = mths.shape[1] // rate # this is how long each second is in the mths
@@ -59,29 +60,35 @@ def main(filename):
         mFirstSeconds.append(i[0:stepsize])
     mFirstSeconds = np.array(mFirstSeconds)
     #print(mFirstSeconds.shape)
-    '''
+    """
 
     # ok, now let's make our joyplot!
     df = pd.DataFrame(
         np.transpose(mths),
     )
-    #display(df)
+    # display(df)
     fig, axes = joypy.joyplot(
         data=df,
         xlabels=False,
         ylabels=False,
-        grid=False, fill=False, background='w', linecolor="k", linewidth=1,
-        legend=False, overlap=0.5,
-        #figsize=(6,5)
+        grid=False,
+        fill=False,
+        background="w",
+        linecolor="k",
+        linewidth=1,
+        legend=False,
+        overlap=0.5,
+        # figsize=(6,5)
     )
 
-    plt.subplots_adjust(left=.333, right=.667, top=0.8, bottom=0.2) # rule of thirds!
-    plt.savefig('plots/'+filename[:-4]+'.png', dpi=500)
-    #plt.show()
+    plt.subplots_adjust(left=0.333, right=0.667, top=0.8, bottom=0.2)  # rule of thirds!
+    plt.savefig("plots/" + filename[:-4] + ".png", dpi=500)
+    # plt.show()
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     if len(sys.argv) > 1:
-        if os.path.isfile('wavs/' + sys.argv[1]):
+        if os.path.isfile("wavs/" + sys.argv[1]):
             main(sys.argv[1])
-        elif os.path.isfile('wavs/' + sys.argv[1] + '.wav'):
-            main(sys.argv[1] + '.wav')
+        elif os.path.isfile("wavs/" + sys.argv[1] + ".wav"):
+            main(sys.argv[1] + ".wav")
