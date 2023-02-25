@@ -6,7 +6,7 @@ from scipy.io import wavfile
 import sys
 import os.path
 import matplotlib.pyplot as plt
-#from IPython.display import display
+from IPython.display import display
 import numpy as np
 import joypy
 import pandas as pd
@@ -28,6 +28,7 @@ def main(filename):
     print("Rate:", rate)
     print("Length:", length)
 
+    '''
     # now let's take every m sections
     x = 3
     secondsToInclude=2
@@ -38,17 +39,16 @@ def main(filename):
         mths.append(data[i:i+int(secondsToInclude*rate)])
     mths = np.array(mths)
     print(mths.shape[0], "graphs, each",mths.shape[1],"long")
-
     '''
+
     # now let's take every m sections
-    secondsToInclude=3
+    secondsToInclude=4
     mths = []
     stepsize = int(secondsToInclude*rate)
     for i in range(0, len(data)-stepsize, stepsize):
         mths.append(data[i:i+stepsize])
     mths = np.array(mths)
     print(mths.shape[0], "graphs, each",mths.shape[1],"long")
-    '''
 
     '''
     # ok and what if we just look at the first second of that set?
@@ -75,9 +75,7 @@ def main(filename):
         #figsize=(6,5)
     )
 
-    plt.subplots_adjust(left=.333, right=.667, top=1, bottom=0) # rule of thirds!
-    #for a in axes[:-1]:
-    #    a.set_xlim([-1*mFirstSeconds.shape[1],2*mFirstSeconds.shape[1]])
+    plt.subplots_adjust(left=.333, right=.667, top=0.8, bottom=0.2) # rule of thirds!
     plt.savefig('plots/'+filename[:-4]+'.png', dpi=500)
     #plt.show()
 
