@@ -40,6 +40,17 @@ def main(filename):
     print(mths.shape[0], "graphs, each",mths.shape[1],"long")
 
     '''
+    # now let's take every m sections
+    secondsToInclude=3
+    mths = []
+    stepsize = int(secondsToInclude*rate)
+    for i in range(0, len(data)-stepsize, stepsize):
+        mths.append(data[i:i+stepsize])
+    mths = np.array(mths)
+    print(mths.shape[0], "graphs, each",mths.shape[1],"long")
+    '''
+
+    '''
     # ok and what if we just look at the first second of that set?
     mFirstSeconds = []
     n = mths.shape[1] // rate # this is how long each second is in the mths
