@@ -3,3 +3,4 @@
 *.png
 *.pickle
 !examplePlot.png
+!phytoHeartbeat.png
