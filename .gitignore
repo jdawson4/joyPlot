@@ -1,4 +1,5 @@
 *.wav
 !/wavs/example.wav
 *.png
+*.pickle
 !examplePlot.png
