@@ -29,8 +29,6 @@ def getPhotos():
 
     i = 0
     for line in lines:
-        #print(line)
-
         i+=1
 
         # uncomment if you had an error and want to restart
@@ -50,7 +48,6 @@ def extractAverages():
     chlorImagesPath = 'chlorImages/'
     files = [f for f in listdir(chlorImagesPath) if isfile(join(chlorImagesPath, f))]
     files.sort(key=getNumFromFilename)
-    #print(files)
 
     averages = []
     for file in files:
@@ -92,20 +89,20 @@ def plotAverages(averages):
 if __name__=='__main__':
     pass
 
-    # uncomment if the images aren't loaded
-    #getPhotos()
+    # comment/uncomment if the images aren't loaded
+    getPhotos()
 
-    # uncomment if the averages aren't pickled yet
+    # comment/uncomment if the averages aren't pickled yet
     # get the averages
-    #averages = extractAverages()
+    averages = extractAverages()
     # and let's save those to a file I guess
-    #with open('averages.pickle', 'wb') as handle:
-    #    pickle.dump(averages, handle, protocol=pickle.HIGHEST_PROTOCOL)
+    with open('averages.pickle', 'wb') as handle:
+        pickle.dump(averages, handle, protocol=pickle.HIGHEST_PROTOCOL)
 
-    # and let's reload it because I'd like to avoid that processing again
-    with open('averages.pickle', 'rb') as handle:
-        averages = pickle.load(handle)
-    #print(averages)
+    # and let's reload it because I'd like to avoid that processing again.
+    # comment/uncomment for that
+    #with open('averages.pickle', 'rb') as handle:
+    #    averages = pickle.load(handle)
 
     # and let's make our joyplot with that:
     plotAverages(averages)
